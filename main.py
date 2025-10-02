@@ -52,7 +52,7 @@ async def lifespan(app: FastAPI):
         raise RuntimeError(f"Failed to connect to MongoDB: {e}")
 
     # 2. Nitter Scraper Initialization
-    nitter_instance_url = os.getenv("NITTER_INSTANCE_URL", "http://raspberrypi.local:8081")
+    nitter_instance_url = os.getenv("NITTER_INSTANCE_URL", "http://localhost:8081")
     try:
         nitter_scraper = Nitter(log_level=1, skip_instance_check=True, instances=[nitter_instance_url])
         print(f"Nitter scraper initialized with instance: {nitter_instance_url}")
@@ -96,7 +96,7 @@ def scrape_and_store_tweet(response_id: ObjectId, tweet_url: str) -> dict:
         tweet = nitter_scraper.get_tweet_by_id(
             user_id,
             tweet_id,
-            instance=os.getenv("NITTER_INSTANCE_URL", "http://raspberrypi.local:8081")
+            instance=os.getenv("NITTER_INSTANCE_URL", "http://localhost:8081")
         )
         
         # Insert the scraped tweet into the 'twitter' collection
